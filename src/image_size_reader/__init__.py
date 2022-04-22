@@ -220,6 +220,8 @@ def decode_bmp(io_byte_reader):
         int.from_bytes(io_byte_reader.read(4), byteorder='little')
     )
 
+
+
 image_decoder_map = {
      b"BM"                : decode_bmp ,
 

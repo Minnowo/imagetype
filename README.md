@@ -1,6 +1,16 @@
 ## image-size-reader
 A python package used to read the width and height of images.
 
+### Image support
+
+This package can currently read the sizes of the following image formats:
+- jpg 
+- png 
+- bmp
+- webp
+- tff 
+- gif 
+
 ### Install
 
 Clone the [src](./src/) folder and run `python setup.py install` to install it as a package.
