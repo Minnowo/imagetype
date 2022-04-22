@@ -1,5 +1,10 @@
 
 
+__version__ = "0.0.1"
+
+
+
+
 def decode_tiff(io_byte_reader, endian : str):
     """ 
     Reads the Width and Height of a .tiff image encoded with the given endian format (big/little).
@@ -235,7 +240,7 @@ image_decoder_map = {
 }
 
 
-def get_image_dimensions(path : str):
+def get_image_size(path : str):
     """ 
     Gets the width and height of an image from the given file path.
 
@@ -286,4 +291,4 @@ if __name__ == "__main__":
 
             print("=" * 32)
             print(file)
-            print("detected size: ", get_image_dimensions(os.path.join(folder, file)))
+            print("detected size: ", get_image_size(os.path.join(folder, file)))
