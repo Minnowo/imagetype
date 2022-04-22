@@ -8,7 +8,7 @@ This package can currently read the sizes of the following image formats:
 - png 
 - bmp
 - webp
-- tff 
+- tiff 
 - gif 
 
 ### Install
