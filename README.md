@@ -10,6 +10,7 @@ This package can currently read the sizes of the following image formats:
 - webp
 - tff 
 - gif 
+- ico
 
 ### Install
 

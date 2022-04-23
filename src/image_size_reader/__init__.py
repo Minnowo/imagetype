@@ -221,6 +221,48 @@ def decode_bmp(io_byte_reader):
     )
 
 
+def decode_ico(io_byte_reader):
+    """ 
+    Reads the Width and Height of a .ico image.
+
+    This assumes the given file stream has already read the header bytes (length of 4).
+
+    Returns [ (int, int), (int, int)... (int, int) ]
+    """
+
+    number_of_images = int.from_bytes(io_byte_reader.read(2), byteorder="little")
+
+    sizes = []
+
+    for _ in range(number_of_images):
+
+        image_directory = io_byte_reader.read(8)
+
+        width = 256
+        height = 256
+
+        if image_directory[0] != 0:
+            width = image_directory[0]
+
+        if image_directory[1] != 0:
+            height = image_directory[1]
+
+        # if image_directory[3] != 0:  # reserved should be 0 
+        #     raise "invalid image??"
+
+        # color_planes = int.from_bytes(image_directory[4:2], byteorder="little")
+
+        # if color_planes != 0 and color_planes != 1: # should be 0 or 1
+        #     raise "invalid image"
+
+        sizes.append((width, height))
+
+        io_byte_reader.read(8)
+        # image_data_size   = int.from_bytes(io_byte_reader.read(4), byteorder="little")
+        # image_data_offset = int.from_bytes(io_byte_reader.read(4), byteorder="little")
+
+
+    return sizes
 
 image_decoder_map = {
      b"BM"                : decode_bmp ,
@@ -239,6 +281,8 @@ image_decoder_map = {
     
      b"MM\x00*"           : decode_tiff_be ,
      b"II*\x00"           : decode_tiff_le ,
+
+     b"\x00\x00\x01\x00"  : decode_ico,
 }
 
 
@@ -285,11 +329,14 @@ if __name__ == "__main__":
 
     p = "..\\..\\images\\"
 
-    for folder in ("tiff", "jpg", "webp", "gif"):
+    for folder in ("tiff", "jpg", "webp", "gif", "ico"):
         
         folder = os.path.join(p, folder)
 
         for file in os.listdir(folder):
+
+            if not file.endswith("ico"):
+                continue
 
             print("=" * 32)
             print(file)
