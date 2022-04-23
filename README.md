@@ -11,6 +11,7 @@ This package can currently read the sizes of the following image formats:
 - tiff 
 - gif 
 - ico
+- psd/psb
 
 ### Install
 
