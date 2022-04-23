@@ -220,7 +220,6 @@ def decode_bmp(io_byte_reader):
         int.from_bytes(io_byte_reader.read(4), byteorder='little')
     )
 
-
 def decode_ico(io_byte_reader):
     """ 
     Reads the Width and Height of a .ico image.
@@ -264,6 +263,23 @@ def decode_ico(io_byte_reader):
 
     return sizes
 
+def decode_psd(io_byte_reader):
+    """ 
+    Reads the Width and Height of a .psd image.
+
+    This assumes the given file stream has already read the header bytes (length of 4).
+
+    Returns (int, int)
+    """
+
+    io_byte_reader.read(10)
+
+    height = int.from_bytes(io_byte_reader.read(4), byteorder="big")
+    width  = int.from_bytes(io_byte_reader.read(4), byteorder="big")
+
+    return (width, height)
+
+
 image_decoder_map = {
      b"BM"                : decode_bmp ,
 
@@ -283,6 +299,8 @@ image_decoder_map = {
      b"II*\x00"           : decode_tiff_le ,
 
      b"\x00\x00\x01\x00"  : decode_ico,
+
+     b"8BPS"              : decode_psd,
 }
 
 
@@ -329,14 +347,11 @@ if __name__ == "__main__":
 
     p = "..\\..\\images\\"
 
-    for folder in ("tiff", "jpg", "webp", "gif", "ico"):
+    for folder in ("tiff", "jpg", "webp", "gif", "ico", "psd"):
         
         folder = os.path.join(p, folder)
 
         for file in os.listdir(folder):
-
-            if not file.endswith("ico"):
-                continue
 
             print("=" * 32)
             print(file)
