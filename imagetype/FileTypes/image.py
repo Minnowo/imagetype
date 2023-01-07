@@ -301,7 +301,6 @@ class Webp(FileType):
         return (0, 0)
 
 
-
 class Tiff(FileType):
     """
     Implements the TIFF image type matcher.
@@ -653,7 +652,6 @@ class Xcf(FileType):
         return buf[:10] == bytearray(
             [0x67, 0x69, 0x6D, 0x70, 0x20, 0x78, 0x63, 0x66, 0x20, 0x76]
         )
-
 
 
 class Cr2(FileType):
